@@ -84,13 +84,13 @@ export function Hero() {
           </p>
 
           <h1 className="masks-in mt-5 font-display font-extrabold uppercase leading-[0.92] tracking-[0.005em] text-snow">
-            <span className="mask-line text-[clamp(3.1rem,8.4vw,6.9rem)]">
+            <span className="mask-line text-[clamp(2.5rem,5vw,4.5rem)]">
               <span style={{ "--d": "140ms" } as React.CSSProperties}>Professional Electrical</span>
             </span>
-            <span className="mask-line text-[clamp(3.1rem,8.4vw,6.9rem)]">
+            <span className="mask-line text-[clamp(2.5rem,5vw,4.5rem)]">
               <span style={{ "--d": "280ms" } as React.CSSProperties}>Service in North West</span>
             </span>
-            <span className="mask-line text-[clamp(3.1rem,8.4vw,6.9rem)] text-volt">
+            <span className="mask-line text-[clamp(2.5rem,5vw,4.5rem)] text-volt">
               <span style={{ "--d": "420ms" } as React.CSSProperties}>
                 <span className="inline-block min-w-[6ch]">{word}</span>
                 <svg

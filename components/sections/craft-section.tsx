@@ -93,7 +93,7 @@ export function Craft() {
               <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
                 <IconBolt className="h-3.5 w-3.5" /> The Electric Jamez standard
               </p>
-              <h2 className="mt-4 font-display text-5xl font-extrabold uppercase leading-[0.95] text-snow sm:text-6xl">
+              <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
                 No cowboys.
                 <br />
                 No shortcuts. <span className="text-volt">No mess.</span>

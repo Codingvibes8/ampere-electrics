@@ -98,7 +98,7 @@ export function Quote() {
             <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
               <IconBolt className="h-3.5 w-3.5" /> Get a fixed quote
             </p>
-            <h2 className="mt-4 font-display text-5xl font-extrabold uppercase leading-[0.95] text-snow sm:text-7xl">
+            <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
               Tell us what's <span className="text-volt">sparking.</span>
             </h2>
             <p className="mt-6 max-w-md leading-relaxed text-mist">

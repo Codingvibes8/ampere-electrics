@@ -91,7 +91,7 @@ export function Services() {
               <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
                 <IconBolt className="h-3.5 w-3.5" /> What we do
               </p>
-              <h2 className="mt-4 font-display text-5xl font-extrabold uppercase leading-[0.95] text-snow sm:text-6xl">
+              <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
                 Professional Electrical Services You Can Trust
               </h2>
               <p className="mt-5 max-w-md leading-relaxed text-mist">

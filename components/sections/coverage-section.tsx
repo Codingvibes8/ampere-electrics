@@ -33,7 +33,7 @@ export function Coverage() {
                 <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
                   <IconBolt className="h-3.5 w-3.5" /> Coverage
                 </p>
-                <h2 className="mt-4 font-display text-5xl font-extrabold uppercase leading-[0.95] text-snow sm:text-6xl">
+                <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
                   NW London postcodes, <span className="text-volt">covered</span>
                 </h2>
                 <p className="mt-5 leading-relaxed text-mist">
@@ -182,7 +182,7 @@ function Testimonials() {
           <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
             <IconBolt className="h-3.5 w-3.5" /> Word of mouth
           </p>
-          <h2 className="mt-4 font-display text-5xl font-extrabold uppercase leading-[0.95] text-snow sm:text-6xl">
+          <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
             The neighbours already use us
           </h2>
           <div className="mt-6 flex items-center gap-4 border border-edge bg-ink2/70 px-5 py-4">
