@@ -52,9 +52,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${crimsonPro.variable} ${jost.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${crimsonPro.variable} ${jost.variable} ${jetbrainsMono.variable} scroll-smooth overflow-x-hidden`}
     >
-      <body className="min-h-screen bg-ink font-body text-snow antialiased">
+      <body className="min-h-screen overflow-x-hidden bg-ink font-body text-snow antialiased">
         <ClientInit />
         {children}
         <Toaster richColors position="bottom-right" />

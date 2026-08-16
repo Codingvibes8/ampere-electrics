@@ -65,61 +65,7 @@ export function Coverage() {
               })}
             </ul>
           </div>
-        </div>sReducedMotion();
-  const timer = useRef(0);
-
-  useEffect(() => {
-    if (reduced || paused) return;
-    timer.current = window.setInterval(() => setIdx((i) => (i + 1) % QUOTES.length), 6500);
-    return () => clearInterval(timer.current);
-  }, [reduced, paused]);
-
-  const next = (idx + 1) % QUOTES.length;
-
-  return (
-    <div id="reviews" className="mt-24 scroll-mt-32 lg:mt-32">
-      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-4">
-          <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
-            <IconBolt className="h-3.5 w-3.5" /> Word of mouth
-          </p>
-          <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
-            The neighbours already use us
-          </h2>
-          <div className="mt-6 flex items-center gap-4 border border-edge bg-ink2/70 px-5 py-4">
-            <span className="font-display text-5xl font-extrabold text-volt">5.0</span>
-            <div>
-              <span className="flex text-volt" aria-label="5.0 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <IconStar key={i} className="h-4 w-4" />
-                ))}
-              </span>
-              <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mist">
-                60+ Google reviews · Which? Trusted Trader
-              </p>
-            </div>
-          </div>
-          <div className="mt-6 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setIdx((idx - 1 + QUOTES.length) % QUOTES.length)}
-              aria-label="Previous review"
-              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
-            >
-              <IconArrow className="h-4 w-4 rotate-180" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setIdx(next)}
-              aria-label="Next review"
-              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
-            >
-              <IconArrow className="h-4 w-4" />
-            </button>
-            <div className="ml-2 flex gap-1.5" aria-hidden="true">
-              {QUOTES.map((_, i) => (
-                <button
-                  key={i}
+        </div>
 
         <Testimonials />
       </div>
@@ -177,7 +123,61 @@ const QUOTES = [
 function Testimonials() {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
-  const reduced = usePrefer
+  const reduced = usePrefersReducedMotion();
+  const timer = useRef<number>(0);
+
+  useEffect(() => {
+    if (reduced || paused) return;
+    timer.current = window.setInterval(() => setIdx((i) => (i + 1) % QUOTES.length), 6500);
+    return () => clearInterval(timer.current);
+  }, [reduced, paused]);
+
+  const next = (idx + 1) % QUOTES.length;
+
+  return (
+    <div id="reviews" className="mt-24 scroll-mt-32 lg:mt-32">
+      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-4">
+          <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
+            <IconBolt className="h-3.5 w-3.5" /> Word of mouth
+          </p>
+          <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
+            The neighbours already use us
+          </h2>
+          <div className="mt-6 flex items-center gap-4 border border-edge bg-ink2/70 px-5 py-4">
+            <span className="font-display text-5xl font-extrabold text-volt">5.0</span>
+            <div>
+              <span className="flex text-volt" aria-label="5.0 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <IconStar key={i} className="h-4 w-4" />
+                ))}
+              </span>
+              <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mist">
+                60+ Google reviews · Which? Trusted Trader
+              </p>
+            </div>
+          </div>
+          <div className="mt-6 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIdx((idx - 1 + QUOTES.length) % QUOTES.length)}
+              aria-label="Previous review"
+              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
+            >
+              <IconArrow className="h-4 w-4 rotate-180" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setIdx(next)}
+              aria-label="Next review"
+              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
+            >
+              <IconArrow className="h-4 w-4" />
+            </button>
+            <div className="ml-2 flex gap-1.5" aria-hidden="true">
+              {QUOTES.map((_, i) => (
+                <button
+                  key={i}
                   type="button"
                   tabIndex={-1}
                   onClick={() => setIdx(i)}
