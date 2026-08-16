@@ -67,7 +67,7 @@ export function Coverage() {
               {POSTCODES.map((p, i) => {
                 const active = selected === i;
                 return (
-                  <Reveal key={p.code} delay={(i % 8) * 45}>
+                  <Reveal key={p.area} delay={(i % 8) * 45}>
                     <li>
                       <button
                         type="button"

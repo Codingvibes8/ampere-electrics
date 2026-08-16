@@ -26,13 +26,13 @@ export function Logo({ className }: P) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
       <img
-        src="/images/EJ-logo.svg"
+        src="/images/EJ-logo.png"
         alt="Electric Jamez logo"
         className="h-9 w-9 shrink-0 rounded-lg object-contain"
       />
       <span className="leading-none">
         <span className="block font-display text-[1.35rem] font-extrabold uppercase tracking-wide text-snow">
-          Electric <span className="text-volt">Jamez</span>
+          Electric <span className="text-red-600">Jamez</span>
         </span>
         <span className="mt-1 block font-mono text-[0.58rem] uppercase tracking-[0.22em] text-mist">
           NAPIT · NW London

@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     
     if (process.env.RESEND_API_KEY) {
       const { error: emailError } = await resend.emails.send({
-        from: "Ampere Electric <quotes@electricjamez.co.uk>", // Replace with verified domain
+        from: "Ampere Electric <onboarding@resend.dev>", // Change back to quotes@electricjamez.co.uk once domain is verified
         to: ["info@electricjamez.co.uk"],
         subject: `New Quote Request [${ref}]: ${job}`,
         html: `
