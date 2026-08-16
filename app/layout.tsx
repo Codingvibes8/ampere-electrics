@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono, Oswald } from "next/font/google";
+import { Crimson_Pro, JetBrains_Mono, Jost } from "next/font/google";
 import "./globals.css";
 import { ClientInit } from "@/components/client-init";
 
-const archivo = Archivo({
-  subsets: ["latin"],
-  variable: "--font-archivo",
-  display: "swap",
-});
+const jost = Jost({
+  subsets: ['latin'],
+  variable: '--font-jost',
+  display: 'swap',
+})
 
-const oswald = Oswald({
-  subsets: ["latin"],
-  variable: "--font-big-shoulders", // Keeping the same variable name so Tailwind config still works
-  display: "swap",
-});
-
+const crimsonPro = Crimson_Pro({
+  subsets: ['latin'],
+  variable: '--font-crimson-pro',
+  display: 'swap',
+})
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
@@ -52,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${oswald.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${crimsonPro.variable} ${jost.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
       <body className="min-h-screen bg-ink font-body text-snow antialiased">
         <ClientInit />
