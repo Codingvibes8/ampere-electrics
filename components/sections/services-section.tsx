@@ -9,7 +9,6 @@ import {
   IconDroplets, IconSun, IconClipboardCheck, IconZap,
 } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 
 type Service = {
   n: string;
