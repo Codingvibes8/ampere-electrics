@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Crimson_Pro, JetBrains_Mono, Jost } from "next/font/google";
 import "./globals.css";
 import { ClientInit } from "@/components/client-init";
+import { Toaster } from "sonner";
 
 const jost = Jost({
   subsets: ['latin'],
@@ -56,6 +57,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-ink font-body text-snow antialiased">
         <ClientInit />
         {children}
+        <Toaster richColors position="bottom-right" />
         <div className="noise" aria-hidden="true" />
       </body>
     </html>

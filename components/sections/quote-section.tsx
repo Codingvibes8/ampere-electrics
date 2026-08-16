@@ -1,6 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/lib/motion";
 import {
@@ -25,55 +29,67 @@ const JOBS = [
 
 const URGENCIES = ["Emergency — today", "This week", "Planning ahead"] as const;
 
-type Fields = {
-  name: string;
-  phone: string;
-  postcode: string;
-  job: string;
-  urgency: string;
-  details: string;
-};
+const formSchema = z.object({
+  name: z.string().min(2, "We need a name to call you back"),
+  phone: z.string().regex(/^\+?[0-9][0-9\s]{8,14}$/, "Enter a valid UK phone number"),
+  postcode: z.string().regex(/^[A-Z]{1,2}[0-9][A-Z0-9]?\s*[0-9][A-Z]{2}$/i, "e.g. HA5 4NR"),
+  job: z.string().min(1, "Pick the closest match — we'll sort the details"),
+  urgency: z.enum(URGENCIES),
+  details: z.string().optional(),
+  honeypot: z.string().optional(),
+});
 
-const EMPTY: Fields = {
-  name: "",
-  phone: "",
-  postcode: "",
-  job: "",
-  urgency: URGENCIES[1],
-  details: "",
-};
+type FormData = z.infer<typeof formSchema>;
 
 export function Quote() {
-  const [f, setF] = useState<Fields>(EMPTY);
-  const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
   const [ref, setRef] = useState("");
 
-  const set = (k: keyof Fields) => (v: string) => {
-    setF((prev) => ({ ...prev, [k]: v }));
-    setErrors((e) => ({ ...e, [k]: undefined }));
-  };
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      postcode: "",
+      job: "",
+      urgency: URGENCIES[1],
+      details: "",
+      honeypot: "",
+    },
+  });
 
-  const validate = () => {
-    const e: Partial<Record<keyof Fields, string>> = {};
-    if (f.name.trim().length < 2) e.name = "We need a name to call you back";
-    if (!/^\+?[0-9][0-9\s]{8,14}$/.test(f.phone.trim())) e.phone = "Enter a valid UK phone number";
-    if (!/^[A-Z]{1,2}[0-9][A-Z0-9]?\s*[0-9][A-Z]{2}$/i.test(f.postcode.trim()))
-      e.postcode = "e.g. HA5 4NR";
-    if (!f.job) e.job = "Pick the closest match — we'll sort the details";
-    return e;
-  };
+  const selectedUrgency = watch("urgency");
 
-  const onSubmit = (ev: FormEvent) => {
-    ev.preventDefault();
-    const e = validate();
-    setErrors(e);
-    if (Object.keys(e).length > 0) return;
+  const onSubmit = async (data: FormData) => {
     setStatus("sending");
-    window.setTimeout(() => {
-      setRef(`AS-${Math.floor(4822 + Math.random() * 900)}`);
+    
+    try {
+      const res = await fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      
+      const result = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(result.error || "Failed to submit quote");
+      }
+      
+      toast.success("Quote request sent successfully!");
+      setRef(result.ref || `AS-${Math.floor(4822 + Math.random() * 900)}`);
       setStatus("done");
-    }, 950);
+    } catch (err: any) {
+      toast.error(err.message || "An error occurred. Please try again.");
+      setStatus("idle");
+    }
   };
 
   const labelCls = "mb-1.5 block font-mono text-[0.62rem] uppercase tracking-[0.18em] text-mist";
@@ -182,10 +198,9 @@ export function Quote() {
                   Logged. <span className="text-volt">We're on it.</span>
                 </h3>
                 <p className="mt-4 max-w-md leading-relaxed text-mist">
-                  Thanks {f.name.split(" ")[0]} — request{" "}
+                  Thanks — request{" "}
                   <span className="font-mono font-bold text-volt">{ref}</span> just hit
-                  the dispatch board. We'll ring{" "}
-                  <span className="font-semibold text-snow">{f.phone}</span> within two
+                  the dispatch board. We'll ring you within two
                   working hours — usually much sooner.
                 </p>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-mist">
@@ -198,7 +213,7 @@ export function Quote() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    setF(EMPTY);
+                    reset();
                     setStatus("idle");
                   }}
                   className="mt-8 group"
@@ -208,7 +223,7 @@ export function Quote() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} noValidate>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <p className="flex items-center justify-between gap-4">
                   <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-mist">
                     Quote request — free, no obligation
@@ -219,6 +234,12 @@ export function Quote() {
                 </p>
 
                 <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                  {/* Honeypot field - hidden from real users */}
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="honeypot">Leave this empty if you are human</label>
+                    <input id="honeypot" type="text" {...register("honeypot")} tabIndex={-1} autoComplete="off" />
+                  </div>
+
                   <div>
                     <label htmlFor="q-name" className={labelCls}>Your name *</label>
                     <Input
@@ -226,11 +247,10 @@ export function Quote() {
                       type="text"
                       autoComplete="name"
                       placeholder="e.g. Amara Osei"
-                      value={f.name}
-                      onChange={(e) => set("name")(e.target.value)}
+                      {...register("name")}
                       error={!!errors.name}
                     />
-                    {errors.name && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.name}</p>}
+                    {errors.name && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.name.message}</p>}
                   </div>
                   <div>
                     <label htmlFor="q-phone" className={labelCls}>Phone *</label>
@@ -239,11 +259,10 @@ export function Quote() {
                       type="tel"
                       autoComplete="tel"
                       placeholder="07… or 020…"
-                      value={f.phone}
-                      onChange={(e) => set("phone")(e.target.value)}
+                      {...register("phone")}
                       error={!!errors.phone}
                     />
-                    {errors.phone && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.phone}</p>}
+                    {errors.phone && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.phone.message}</p>}
                   </div>
                   <div>
                     <label htmlFor="q-postcode" className={labelCls}>Postcode *</label>
@@ -252,28 +271,26 @@ export function Quote() {
                       type="text"
                       autoComplete="postal-code"
                       placeholder="HA5 4NR"
-                      value={f.postcode}
-                      onChange={(e) => set("postcode")(e.target.value)}
-                      error={!!errors.postcode}
                       className="uppercase"
+                      {...register("postcode")}
+                      error={!!errors.postcode}
                     />
-                    {errors.postcode && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.postcode}</p>}
+                    {errors.postcode && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.postcode.message}</p>}
                   </div>
                   <div>
                     <label htmlFor="q-job" className={labelCls}>What needs doing? *</label>
                     <Select
                       id="q-job"
-                      value={f.job}
-                      onChange={(e) => set("job")(e.target.value)}
+                      {...register("job")}
                       error={!!errors.job}
-                      className={cn(!f.job && "text-mist/60")}
+                      className={cn(!watch("job") && "text-mist/60")}
                     >
                       <option value="" disabled>Choose the closest match</option>
                       {JOBS.map((j) => (
                         <option key={j} value={j} className="bg-ink2 text-snow">{j}</option>
                       ))}
                     </Select>
-                    {errors.job && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.job}</p>}
+                    {errors.job && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.job.message}</p>}
                   </div>
                 </div>
 
@@ -284,11 +301,11 @@ export function Quote() {
                       <button
                         key={u}
                         type="button"
-                        onClick={() => set("urgency")(u)}
-                        aria-pressed={f.urgency === u}
+                        onClick={() => setValue("urgency", u)}
+                        aria-pressed={selectedUrgency === u}
                         className={cn(
                           "border px-3 py-3 font-mono text-[0.66rem] font-semibold uppercase tracking-[0.1em] transition-all duration-300",
-                          f.urgency === u
+                          selectedUrgency === u
                             ? "border-volt bg-volt/15 text-volt"
                             : "border-edge text-mist hover:border-mist/60 hover:text-snow"
                         )}
@@ -305,8 +322,7 @@ export function Quote() {
                     id="q-details"
                     rows={3}
                     placeholder="e.g. Board trips every time the kettle and toaster run together…"
-                    value={f.details}
-                    onChange={(e) => set("details")(e.target.value)}
+                    {...register("details")}
                   />
                 </div>
 
