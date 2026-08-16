@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { cn } from "@/lib/utils";
+import React from "react";
 import { useScramble } from "@/lib/motion";
 import { IconArrow, IconBolt, IconPhone, IconShield, IconStar } from "@/components/icons";
-import { JobTicket } from "./job-ticket";
 import { Button } from "@/components/ui/button";
 
 const WORDS = ["ELECTRIFIED.", "PROTECTED.", "CERTIFIED.", "POWERED UP."] as const;
@@ -45,13 +43,9 @@ function CircuitBackdrop() {
 
 export function Hero() {
   const word = useScramble(WORDS, 3400);
-  const [mainsOn, setMainsOn] = useState(true);
 
   return (
-    <section
-      id="top"
-      className={cn("relative overflow-hidden bg-ink", !mainsOn && "mains-off")}
-    >
+    <section id="top" className="relative overflow-hidden bg-ink">
       <div className="bg-grid absolute inset-0" aria-hidden="true" />
       <div
         className="glow absolute -top-40 right-[-10%] h-[42rem] w-[42rem] rounded-full opacity-100"
@@ -84,13 +78,13 @@ export function Hero() {
           </p>
 
           <h1 className="masks-in mt-5 font-display font-extrabold uppercase leading-[0.92] tracking-[0.005em] text-snow">
-            <span className="mask-line text-[clamp(2.5rem,5vw,4.5rem)]">
+            <span className="mask-line text-[clamp(1.75rem,8vw,4.5rem)]">
               <span style={{ "--d": "140ms" } as React.CSSProperties}>Professional Electrical</span>
             </span>
-            <span className="mask-line text-[clamp(2.5rem,5vw,4.5rem)]">
+            <span className="mask-line text-[clamp(1.75rem,8vw,4.5rem)]">
               <span style={{ "--d": "280ms" } as React.CSSProperties}>Service in North West</span>
             </span>
-            <span className="mask-line text-[clamp(2.5rem,5vw,4.5rem)] text-volt">
+            <span className="mask-line text-[clamp(1.75rem,8vw,4.5rem)] text-volt">
               <span style={{ "--d": "420ms" } as React.CSSProperties}>
                 <span className="inline-block min-w-[6ch]">{word}</span>
                 <svg
@@ -148,14 +142,25 @@ export function Hero() {
           </div>
         </div>
 
-        {/* right — live ticket */}
+        {/* right — hero image */}
         <div className="relative lg:col-span-5">
-          <p className="mb-3 flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-mist">
-            <IconBolt className="h-3.5 w-3.5 text-volt" />
-            From the dispatch board, right now
-          </p>
-          <JobTicket mainsOn={mainsOn} onToggle={() => setMainsOn((v) => !v)} />
-          <div className="pointer-events-none absolute -bottom-6 -left-6 -z-10 hidden h-full w-full border border-secondary/40 sm:block" aria-hidden="true" />
+          <div className="group relative">
+            <div
+              className="pointer-events-none absolute -right-4 -top-4 h-full w-full border border-secondary/40 transition-colors duration-500 group-hover:border-secondary/70 sm:-right-5 sm:-top-5"
+              aria-hidden="true"
+            />
+            <img
+              src="/images/hero-bg.jpg"
+              alt="Electric Jamez technician carrying out a certified installation"
+              className="relative aspect-[4/5] w-full rotate-1 object-cover grayscale-[30%] shadow-[0_24px_70px_rgba(3,9,17,.6)] transition-all duration-500 group-hover:rotate-0 group-hover:grayscale-0"
+            />
+            <div className="absolute bottom-4 left-4 border border-edge bg-ink/80 px-4 py-3 backdrop-blur-sm">
+              <p className="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-mist">
+                <IconBolt className="h-3.5 w-3.5 text-volt" />
+                NAPIT approved · certified
+              </p>
+            </div>
+          </div>
           <p className="mt-6 flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-mist/80">
             <IconShield className="h-4 w-4 text-secondary" />
             Every job photographed, tested &amp; certified before we leave

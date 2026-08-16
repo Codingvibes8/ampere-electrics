@@ -19,19 +19,19 @@ export function TopBar() {
 
   return (
     <div className="relative z-50 border-b border-edge bg-ink2">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-mist sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-center sm:justify-between gap-4 px-4 py-2 font-mono text-[0.55rem] sm:text-[0.65rem] uppercase tracking-[0.16em] text-mist sm:px-6 lg:px-8">
         <p className="hidden truncate md:block">
           NAPIT Approved Contractor · Which? Trusted Trader · BS 7671:2018+A2:2022
         </p>
-        <p className="truncate md:hidden">NAPIT Approved · Which? Trusted Trader</p>
+        <p className="hidden truncate sm:block md:hidden">NAPIT Approved · Which? Trusted Trader</p>
         <p className="flex shrink-0 items-center gap-2">
           <span
             className={cn(
-              "dot-ping inline-block h-1.5 w-1.5 rounded-full",
+              "dot-ping inline-block h-1.5 w-1.5 shrink-0 rounded-full",
               open ? "bg-go text-go" : "bg-volt text-volt"
             )}
           />
-          <span className={open ? "text-go" : "text-volt"}>
+          <span className={cn("truncate", open ? "text-go" : "text-volt")}>
             {open ? "Office open — replies in minutes" : "Out of hours — 24/7 line open"}
           </span>
         </p>

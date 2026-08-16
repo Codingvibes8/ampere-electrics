@@ -5,24 +5,21 @@ import { cn } from "@/lib/utils";
 import { Reveal, usePrefersReducedMotion } from "@/lib/motion";
 import { IconArrow, IconBolt, IconPin, IconStar } from "@/components/icons";
 
-const POSTCODES: { code: string; area: string; mins: number }[] = [
-  { code: "NW2", area: "Cricklewood", mins: 15 },
-  { code: "NW10", area: "Willesden", mins: 18 },
-  { code: "NW2", area: "Dollis Hill", mins: 12 },
-  { code: "NW10", area: "Neasden", mins: 20 },
-  { code: "NW6", area: "Kilburn", mins: 22 },
-  { code: "NW6", area: "West Hampstead", mins: 25 },
-  { code: "NW6", area: "Brondesbury", mins: 24 },
-  { code: "NW10", area: "Kensal Rise", mins: 20 },
-  { code: "NW3", area: "Hampstead", mins: 20 },
-  { code: "NW4", area: "Hendon", mins: 18 },
-  { code: "NW11", area: "Golders Green", mins: 15 },
+const POSTCODES: { code: string; area: string }[] = [
+  { code: "NW2", area: "Cricklewood" },
+  { code: "NW10", area: "Willesden" },
+  { code: "NW2", area: "Dollis Hill" },
+  { code: "NW10", area: "Neasden" },
+  { code: "NW6", area: "Kilburn" },
+  { code: "NW6", area: "West Hampstead" },
+  { code: "NW6", area: "Brondesbury" },
+  { code: "NW10", area: "Kensal Rise" },
+  { code: "NW3", area: "Hampstead" },
+  { code: "NW4", area: "Hendon" },
+  { code: "NW11", area: "Golders Green" },
 ];
 
 export function Coverage() {
-  const [selected, setSelected] = useState(0); // NW2 Cricklewood — home base
-  const pc = POSTCODES[selected];
-
   return (
     <section id="areas" className="relative border-t border-edge bg-ink py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -38,24 +35,12 @@ export function Coverage() {
                 </h2>
                 <p className="mt-5 leading-relaxed text-mist">
                   Based in Cricklewood, serving North West London with fast response times
-                  measured door-to-door. Tap your area to see our average emergency response.
+                  measured door-to-door.
                 </p>
               </Reveal>
 
               <Reveal delay={140}>
-                <div className="mt-8 border border-edge bg-ink2/80 p-5" aria-live="polite">
-                  <p className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-mist">
-                    <IconPin className="h-4 w-4 text-volt" /> Cricklewood depot → {pc.area} ({pc.code})
-                  </p>
-                  <p className="mt-3 font-display text-5xl font-extrabold uppercase leading-none text-volt">
-                    {pc.mins}
-                    <span className="text-2xl text-mist"> min</span>
-                  </p>
-                  <p className="mt-2 text-sm text-mist">
-                    average emergency response over the last 12 months
-                  </p>
-                </div>
-                <p className="mt-5 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-mist/80">
+                <p className="mt-8 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-mist/80">
                   Just outside NW London? Ring us — we cover the surrounding areas too.
                 </p>
               </Reveal>
@@ -65,48 +50,76 @@ export function Coverage() {
           <div className="lg:col-span-8">
             <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
               {POSTCODES.map((p, i) => {
-                const active = selected === i;
                 return (
                   <Reveal key={p.area} delay={(i % 8) * 45}>
                     <li>
-                      <button
-                        type="button"
-                        onClick={() => setSelected(i)}
-                        aria-pressed={active}
-                        className={cn(
-                          "group relative w-full border px-4 py-4 text-left transition-all duration-300",
-                          active
-                            ? "border-volt bg-volt/10 shadow-[0_10px_36px_rgba(255,179,0,.15)]"
-                            : "border-edge bg-ink2/60 hover:-translate-y-1 hover:border-volt/50"
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            "block font-display text-2xl font-extrabold uppercase leading-none transition-colors",
-                            active ? "text-volt" : "text-snow group-hover:text-volt2"
-                          )}
-                        >
+                      <div className="group relative w-full border border-edge bg-ink2/60 px-4 py-4 text-left transition-all duration-300 hover:-translate-y-1 hover:border-volt/50">
+                        <span className="block font-display text-2xl font-extrabold uppercase leading-none text-snow transition-colors group-hover:text-volt2">
                           {p.code}
                         </span>
                         <span className="mt-1.5 block text-xs text-mist">{p.area}</span>
-                        <span
-                          className={cn(
-                            "absolute right-3 top-3 font-mono text-[0.6rem] font-bold uppercase tracking-wider transition-all duration-300",
-                            active
-                              ? "text-volt opacity-100"
-                              : "translate-y-1 text-go opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
-                          )}
-                        >
-                          {p.mins}m
-                        </span>
-                      </button>
+                      </div>
                     </li>
                   </Reveal>
                 );
               })}
             </ul>
           </div>
-        </div>
+        </div>sReducedMotion();
+  const timer = useRef(0);
+
+  useEffect(() => {
+    if (reduced || paused) return;
+    timer.current = window.setInterval(() => setIdx((i) => (i + 1) % QUOTES.length), 6500);
+    return () => clearInterval(timer.current);
+  }, [reduced, paused]);
+
+  const next = (idx + 1) % QUOTES.length;
+
+  return (
+    <div id="reviews" className="mt-24 scroll-mt-32 lg:mt-32">
+      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-4">
+          <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
+            <IconBolt className="h-3.5 w-3.5" /> Word of mouth
+          </p>
+          <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
+            The neighbours already use us
+          </h2>
+          <div className="mt-6 flex items-center gap-4 border border-edge bg-ink2/70 px-5 py-4">
+            <span className="font-display text-5xl font-extrabold text-volt">5.0</span>
+            <div>
+              <span className="flex text-volt" aria-label="5.0 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <IconStar key={i} className="h-4 w-4" />
+                ))}
+              </span>
+              <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mist">
+                60+ Google reviews · Which? Trusted Trader
+              </p>
+            </div>
+          </div>
+          <div className="mt-6 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIdx((idx - 1 + QUOTES.length) % QUOTES.length)}
+              aria-label="Previous review"
+              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
+            >
+              <IconArrow className="h-4 w-4 rotate-180" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setIdx(next)}
+              aria-label="Next review"
+              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
+            >
+              <IconArrow className="h-4 w-4" />
+            </button>
+            <div className="ml-2 flex gap-1.5" aria-hidden="true">
+              {QUOTES.map((_, i) => (
+                <button
+                  key={i}
 
         <Testimonials />
       </div>
@@ -164,61 +177,7 @@ const QUOTES = [
 function Testimonials() {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
-  const reduced = usePrefersReducedMotion();
-  const timer = useRef(0);
-
-  useEffect(() => {
-    if (reduced || paused) return;
-    timer.current = window.setInterval(() => setIdx((i) => (i + 1) % QUOTES.length), 6500);
-    return () => clearInterval(timer.current);
-  }, [reduced, paused]);
-
-  const next = (idx + 1) % QUOTES.length;
-
-  return (
-    <div id="reviews" className="mt-24 scroll-mt-32 lg:mt-32">
-      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-4">
-          <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
-            <IconBolt className="h-3.5 w-3.5" /> Word of mouth
-          </p>
-          <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-[0.95] text-snow sm:text-5xl">
-            The neighbours already use us
-          </h2>
-          <div className="mt-6 flex items-center gap-4 border border-edge bg-ink2/70 px-5 py-4">
-            <span className="font-display text-5xl font-extrabold text-volt">5.0</span>
-            <div>
-              <span className="flex text-volt" aria-label="5.0 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <IconStar key={i} className="h-4 w-4" />
-                ))}
-              </span>
-              <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mist">
-                60+ Google reviews · Which? Trusted Trader
-              </p>
-            </div>
-          </div>
-          <div className="mt-6 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setIdx((idx - 1 + QUOTES.length) % QUOTES.length)}
-              aria-label="Previous review"
-              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
-            >
-              <IconArrow className="h-4 w-4 rotate-180" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setIdx(next)}
-              aria-label="Next review"
-              className="flex h-11 w-11 items-center justify-center border border-edge text-mist transition-all duration-300 hover:border-volt hover:text-volt"
-            >
-              <IconArrow className="h-4 w-4" />
-            </button>
-            <div className="ml-2 flex gap-1.5" aria-hidden="true">
-              {QUOTES.map((_, i) => (
-                <button
-                  key={i}
+  const reduced = usePrefer
                   type="button"
                   tabIndex={-1}
                   onClick={() => setIdx(i)}
