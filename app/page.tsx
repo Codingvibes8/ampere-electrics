@@ -10,6 +10,7 @@ import { Faq } from "@/components/sections/faq-section";
 import { Quote } from "@/components/sections/quote-section";
 import { Footer } from "@/components/layout/footer";
 import { CallFab } from "@/components/layout/call-fab";
+import { BlogSection } from "@/components/sections/blog-section";
 
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
         <Coverage />
         <Rates />
         <Faq />
+        <BlogSection />
         <Quote />
       </main>
 

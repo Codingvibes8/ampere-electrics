@@ -1,6 +1,7 @@
 "use client";
 
 import { IconBolt, Logo } from "@/components/icons";
+import Link from "next/link";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -73,10 +74,16 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-edge pt-7">
+        <div className="mt-14 flex flex-col gap-6 border-t border-edge pt-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-mist/70">
             © {year} Electric Jamez. All rights reserved.
           </p>
+          <ul className="flex flex-wrap gap-4 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-mist/70">
+            <li><Link href="/blog" className="transition-colors hover:text-volt">Blog</Link></li>
+            <li><Link href="/privacy" className="transition-colors hover:text-volt">Privacy</Link></li>
+            <li><Link href="/terms" className="transition-colors hover:text-volt">Terms</Link></li>
+            <li><Link href="/cookies" className="transition-colors hover:text-volt">Cookies</Link></li>
+          </ul>
           <p className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-mist/70">
             <IconBolt className="h-3.5 w-3.5 text-volt" /> Wired in Cricklewood, naturally
           </p>
