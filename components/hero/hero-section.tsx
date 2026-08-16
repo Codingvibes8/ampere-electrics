@@ -68,7 +68,7 @@ export function Hero() {
         230V — 50Hz — BS 7671:2018+A2 — NAPIT APPROVED
       </p>
 
-      <div className="relative mx-auto grid max-w-7xl gap-14 px-4 pb-10 pt-14 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-16 lg:pt-20">
+      <div className="relative mx-auto grid max-w-7xl gap-8 px-4 pb-8 pt-10 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-10 lg:pt-12">
         {/* left */}
         <div className="lg:col-span-7">
           <p className="mask-line font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
@@ -105,12 +105,12 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-mist sm:text-lg">
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-mist sm:text-lg">
             NAPIT approved and Which? Trusted Trader electrician serving NW2 and surrounding areas.
             Powering your home safely with over 15 years of expert excellence.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="group">
               <a href="tel:+447000000000" className="flex items-center gap-3">
                 <IconPhone className="h-4.5 w-4.5 transition-transform duration-300 group-hover:-rotate-12" />
@@ -128,7 +128,7 @@ export function Hero() {
           </div>
 
           {/* trust strip */}
-          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 bg-[#0C4DA2]/20 border border-[#0C4DA2]/50 rounded-full px-4 py-2 shadow-lg transition-transform hover:scale-105">
                 <IconShield className="w-4 h-4 text-snow" />
