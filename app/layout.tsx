@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import { ClientInit } from "@/components/client-init";
 
 const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
+  display: "swap",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-big-shoulders", // Keeping the same variable name so Tailwind config still works
   display: "swap",
 });
 
@@ -46,18 +52,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${archivo.variable} ${oswald.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&display=swap" rel="stylesheet" />
-        <style dangerouslySetInnerHTML={{__html: `
-          :root {
-            --font-big-shoulders: 'Big Shoulders Display', sans-serif;
-          }
-        `}} />
-      </head>
       <body className="min-h-screen bg-ink font-body text-snow antialiased">
         <ClientInit />
         {children}
