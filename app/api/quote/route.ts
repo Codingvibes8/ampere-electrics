@@ -33,15 +33,17 @@ export async function POST(req: Request) {
     }
 
     // 4. Save to Supabase
-    const { error: dbError } = await supabase
-      .from("quotes")
-      .insert([
-        { name, phone, postcode, job, urgency, details }
-      ]);
-      
-    if (dbError) {
-      console.error("Supabase insert error:", dbError);
-      // We can continue even if DB fails, or we can fail the request
+    if (supabase) {
+      const { error: dbError } = await supabase
+        .from("quotes")
+        .insert([
+          { name, phone, postcode, job, urgency, details }
+        ]);
+        
+      if (dbError) {
+        console.error("Supabase insert error:", dbError);
+        // We can continue even if DB fails, or we can fail the request
+      }
     }
 
     // 5. Send email via Resend
