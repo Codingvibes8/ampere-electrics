@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Resend } from "resend";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,7 +10,7 @@ const quoteSchema = z.object({
   phone: z.string().regex(/^\+?[0-9][0-9\s]{8,14}$/, "Valid UK phone number required"),
   postcode: z.string().regex(/^[A-Z]{1,2}[0-9][A-Z0-9]?\s*[0-9][A-Z]{2}$/i, "Valid UK postcode required"),
   job: z.string().min(1, "Job type is required"),
-  urgency: z.enum(["Emergency — today", "This week", "Planning ahead"]),
+  date: z.string().min(1, "Date is required"),
   details: z.string().optional(),
   honeypot: z.string().optional(),
 });
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid data", details: result.error.format() }, { status: 400 });
     }
     
-    const { name, phone, postcode, job, urgency, details, honeypot } = result.data;
+    const { name, phone, postcode, job, date, details, honeypot } = result.data;
 
     // 2. Honeypot check
     if (honeypot) {
@@ -33,11 +33,13 @@ export async function POST(req: Request) {
     }
 
     // 4. Save to Supabase
+    const supabase = await createClient();
+    
     if (supabase) {
       const { error: dbError } = await supabase
         .from("quotes")
         .insert([
-          { name, phone, postcode, job, urgency, details }
+          { name, phone, postcode, job, urgency: date, details }
         ]);
         
       if (dbError) {
@@ -52,7 +54,7 @@ export async function POST(req: Request) {
     if (process.env.RESEND_API_KEY) {
       const { error: emailError } = await resend.emails.send({
         from: "Ampere Electric <onboarding@resend.dev>", // Change back to quotes@electricjamez.co.uk once domain is verified
-        to: ["info@electricjamez.co.uk"],
+        to: ["wecodeappz@gmail.com"],
         subject: `New Quote Request [${ref}]: ${job}`,
         html: `
           <h2>New Quote Request (${ref})</h2>
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>Postcode:</strong> ${postcode}</p>
           <p><strong>Job:</strong> ${job}</p>
-          <p><strong>Urgency:</strong> ${urgency}</p>
+          <p><strong>Preferred Date:</strong> ${date}</p>
           <p><strong>Details:</strong> ${details || "N/A"}</p>
         `,
       });

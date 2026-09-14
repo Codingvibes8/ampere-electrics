@@ -27,14 +27,12 @@ const JOBS = [
   "Something else entirely",
 ];
 
-const URGENCIES = ["Emergency — today", "This week", "Planning ahead"] as const;
-
 const formSchema = z.object({
   name: z.string().min(2, "We need a name to call you back"),
   phone: z.string().regex(/^\+?[0-9][0-9\s]{8,14}$/, "Enter a valid UK phone number"),
   postcode: z.string().regex(/^[A-Z]{1,2}[0-9][A-Z0-9]?\s*[0-9][A-Z]{2}$/i, "e.g. HA5 4NR"),
   job: z.string().min(1, "Pick the closest match — we'll sort the details"),
-  urgency: z.enum(URGENCIES),
+  date: z.string().min(1, "Please select a date"),
   details: z.string().optional(),
   honeypot: z.string().optional(),
 });
@@ -59,13 +57,11 @@ export function Quote() {
       phone: "",
       postcode: "",
       job: "",
-      urgency: URGENCIES[1],
+      date: "",
       details: "",
       honeypot: "",
     },
   });
-
-  const selectedUrgency = watch("urgency");
 
   const onSubmit = async (data: FormData) => {
     setStatus("sending");
@@ -295,25 +291,16 @@ export function Quote() {
                 </div>
 
                 <fieldset className="mt-5">
-                  <legend className={labelCls}>How soon?</legend>
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                    {URGENCIES.map((u) => (
-                      <button
-                        key={u}
-                        type="button"
-                        onClick={() => setValue("urgency", u)}
-                        aria-pressed={selectedUrgency === u}
-                        className={cn(
-                          "border px-3 py-3 font-mono text-[0.66rem] font-semibold uppercase tracking-[0.1em] transition-all duration-300",
-                          selectedUrgency === u
-                            ? "border-volt bg-volt/15 text-volt"
-                            : "border-edge text-mist hover:border-mist/60 hover:text-snow"
-                        )}
-                      >
-                        {u}
-                      </button>
-                    ))}
+                  <legend className={labelCls}>Preferred Date *</legend>
+                  <div className="w-full sm:w-1/2">
+                    <Input
+                      type="date"
+                      className={cn("w-full block bg-transparent", !watch("date") && "text-mist/60")}
+                      {...register("date")}
+                      error={!!errors.date}
+                    />
                   </div>
+                  {errors.date && <p className="mt-1.5 font-mono text-[0.62rem] uppercase tracking-wider text-alarm">⌁ {errors.date.message}</p>}
                 </fieldset>
 
                 <div className="mt-5">
