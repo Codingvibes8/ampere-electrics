@@ -78,7 +78,7 @@ export function Nav() {
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#top" aria-label="ElectricJamez — back to top" className="transition-opacity hover:opacity-85">
+        <a href="/" aria-label="ElectricJamez — home" className="transition-opacity hover:opacity-85">
           <Logo />
         </a>
 
