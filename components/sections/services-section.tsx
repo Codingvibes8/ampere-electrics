@@ -9,77 +9,21 @@ import {
   IconDroplets, IconSun, IconClipboardCheck, IconZap,
 } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
+import { services, type ServiceId } from "@/siteconfig";
 
-type Service = {
-  n: string;
-  title: string;
-  icon: (p: { className?: string }) => React.ReactNode;
-  from: string;
-  copy: string;
-  tags: string[];
+const SERVICE_ICONS: Record<ServiceId, (p: { className?: string }) => React.ReactNode> = {
+  "air-conditioning": IconWind,
+  "ev-charger": IconCar,
+  eicr: IconShieldCheck,
+  "flood-damage": IconDroplets,
+  "outdoor-lighting": IconSun,
+  "pat-testing": IconClipboardCheck,
+  "solar-panels": IconZap,
 };
-
-const SERVICES: Service[] = [
-  {
-    n: "01",
-    title: "Air Conditioning Service",
-    icon: IconWind,
-    from: "from £189",
-    copy: "Keep your home or business cool year-round with expert AC installation and servicing. We provide full air conditioning solutions including split system installation, ducted systems, multi-zone setups, and regular maintenance servicing. Our NAPIT-approved engineers ensure every installation meets the highest safety and efficiency standards. We work with leading brands and offer comprehensive aftercare support.",
-    tags: ["Split systems", "Ducted AC", "Maintenance plans"],
-  },
-  {
-    n: "02",
-    title: "EV Charger Installation",
-    icon: IconCar,
-    from: "from £849",
-    copy: "Certified EV charger installation for all major brands — from site survey to final sign-off. As certified EV charger installers, we handle everything from site surveys to final commissioning. We install all major brands including Tesla Wall Connectors, Ohme, Pod Point, and Easee. Every installation includes electrical capacity assessment, dedicated circuit installation, and all necessary Part P certification documentation.",
-    tags: ["Tesla · Ohme · Pod Point", "7kW / 22kW", "OZEV grant advice"],
-  },
-  {
-    n: "03",
-    title: "Electric Safety Certificates",
-    icon: IconShieldCheck,
-    from: "from £129",
-    copy: "EICR testing for landlords, buyers, and businesses — legally compliant and fully documented. Our Electrical Installation Condition Reports (EICR) meet all current regulations. Essential for landlords (legally required every 5 years), homebuyers, and insurance requirements. We thoroughly test all circuits, identify any defects, and provide clear documentation with remedial recommendations where needed.",
-    tags: ["Landlord EICR", "Homebuyer reports", "PDF within 24h"],
-  },
-  {
-    n: "04",
-    title: "Flood Damage Assessment",
-    icon: IconDroplets,
-    from: "from £149",
-    copy: "Rapid-response electrical assessment and restoration after water or flood damage. Flooding can cause catastrophic damage to electrical systems. Our rapid response team provides thorough assessment of all affected circuits, consumer units, and wiring. We handle isolation, drying assessments, replacement of damaged components, re-testing, and full re-certification to get your property safely back online.",
-    tags: ["Emergency response", "Insurance liaison", "Full re-certification"],
-  },
-  {
-    n: "05",
-    title: "Outdoor Lighting & Heating",
-    icon: IconSun,
-    from: "from £199",
-    copy: "Bespoke outdoor lighting and heating installations — weatherproof and energy-efficient. Create stunning outdoor environments with our bespoke lighting design and installation service. From garden pathway lights and security floodlights to patio heaters and entertaining areas — we design and install complete outdoor electrical solutions that are weatherproof, energy-efficient, and beautifully integrated.",
-    tags: ["Garden lighting", "Security lights", "Patio heaters"],
-  },
-  {
-    n: "06",
-    title: "PAT Testing",
-    icon: IconClipboardCheck,
-    from: "from £65",
-    copy: "Full Portable Appliance Testing with pass/fail labels and a digital compliance report. Regular PAT testing is essential for workplace safety and insurance compliance. We test all portable electrical equipment, from computers and kettles to power tools and extension leads. Each appliance receives a pass/fail label, and you receive a comprehensive digital report for your records.",
-    tags: ["Workplace compliance", "Digital reports", "Pass/fail labels"],
-  },
-  {
-    n: "07",
-    title: "Solar Panel Installation",
-    icon: IconZap,
-    from: "from £4,995",
-    copy: "Modern solar panel systems for residential and commercial properties — reduce bills and energy dependence. Harness the power of the sun with our professional solar panel installation service. We design and install complete solar PV systems tailored to your property and energy needs. From site assessment and system sizing to MCS registration and grid connection, we handle every step. Our installations include battery storage options, monitoring systems, and comprehensive warranties for long-term peace of mind.",
-    tags: ["MCS certified", "Battery storage", "Grid connection"],
-  },
-];
 
 export function Services() {
   const [open, setOpen] = useState(0);
+  const evCharger = services.find((s) => s.id === "ev-charger");
 
   return (
     <section id="services" className="relative bg-ink py-24 lg:py-32">
@@ -120,7 +64,7 @@ export function Services() {
                 </div>
                 <div className="flex items-center justify-between px-4 py-3.5">
                   <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-mist">
-                    7kW EV charger, fitted & certified — <span className="text-snow">from £849</span>
+                    7kW EV charger, fitted & certified — <span className="text-snow">{evCharger?.from}</span>
                   </p>
                   <IconArrow className="h-4 w-4 text-volt transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
@@ -132,11 +76,11 @@ export function Services() {
         {/* accordion list */}
         <div className="lg:col-span-7">
           <ul className="divide-y divide-edge border-y border-edge">
-            {SERVICES.map((s, i) => {
+            {services.map((s, i) => {
               const isOpen = open === i;
-              const Icon = s.icon;
+              const Icon = SERVICE_ICONS[s.id];
               return (
-                <Reveal key={s.n} delay={i * 60}>
+                <Reveal key={s.id} delay={i * 60}>
                   <li className={cn("transition-colors duration-300", isOpen && "bg-ink2/70")}>
                     <button
                       type="button"

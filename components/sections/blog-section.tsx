@@ -2,33 +2,7 @@ import Link from "next/link";
 import { Reveal } from "@/lib/motion";
 import { IconBolt } from "@/components/icons";
 import { ArrowRight, Calendar } from "lucide-react";
-
-const POSTS = [
-  {
-    slug: 'ev-charger-installation-guide-london-homeowners',
-    title: 'The Complete Guide to EV Charger Installation for London Homeowners',
-    excerpt: 'Everything you need to know about installing a home EV charger in London — costs, regulations, grants, and how to choose the right charger for your property.',
-    date: '2026-08-15',
-    readTime: '8 min read',
-    category: 'EV Charging',
-  },
-  {
-    slug: 'electrical-safety-certificate-eicr-what-landlords-need-to-know',
-    title: 'Electrical Safety Certificates (EICR): What Every London Landlord Needs to Know',
-    excerpt: 'A landlord\'s guide to EICR regulations, compliance deadlines, penalties for non-compliance, and how to book an inspection with a qualified electrician.',
-    date: '2026-08-10',
-    readTime: '6 min read',
-    category: 'Safety',
-  },
-  {
-    slug: 'signs-your-home-needs-rewiring',
-    title: '7 Warning Signs Your London Home Needs Rewiring',
-    excerpt: 'Flickering lights, burning smells, and tripping breakers could mean your wiring is outdated or dangerous. Learn the key warning signs and when to call a professional.',
-    date: '2026-08-05',
-    readTime: '5 min read',
-    category: 'Home Safety',
-  },
-];
+import { blogPosts as POSTS } from "@/siteconfig";
 
 export function BlogSection() {
   return (

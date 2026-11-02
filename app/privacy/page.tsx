@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { ChevronLeft, ShieldCheck } from 'lucide-react'
+import { contact, legalPages } from '@/siteconfig'
 
 export const metadata = {
-  title: 'Privacy Policy | Electric Jamez',
-  description: 'How we collect, use, and protect your personal data at Electric Jamez.',
+  title: legalPages.privacy.title,
+  description: legalPages.privacy.description,
 }
 
 export default function PrivacyPolicy() {
@@ -22,7 +23,7 @@ export default function PrivacyPolicy() {
             <span className="text-sm font-bold uppercase tracking-widest text-foreground/60">Legal</span>
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-extrabold text-foreground">Privacy Policy</h1>
-          <p className="mt-4 text-muted-foreground italic">Last Updated: March 19, 2026</p>
+          <p className="mt-4 text-muted-foreground italic">Last Updated: {legalPages.privacy.lastUpdated}</p>
         </header>
 
         <article className="prose prose-lg dark:prose-invert max-w-none space-y-8 text-muted-foreground leading-relaxed">
@@ -82,7 +83,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-bold text-foreground font-serif">7. Contact Us</h2>
             <p>
-              If you have any questions about this Privacy Policy or our treatment of your personal data, please contact us at <Link href="mailto:info@electricjamez.co.uk" className="text-primary hover:underline">info@electricjamez.co.uk</Link>.
+              If you have any questions about this Privacy Policy or our treatment of your personal data, please contact us at <Link href={contact.emailHref} className="text-primary hover:underline">{contact.email}</Link>.
             </p>
           </section>
         </article>

@@ -4,20 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal, usePrefersReducedMotion } from "@/lib/motion";
 import { IconArrow, IconBolt, IconPin, IconStar } from "@/components/icons";
-
-const POSTCODES: { code: string; area: string }[] = [
-  { code: "NW2", area: "Cricklewood" },
-  { code: "NW10", area: "Willesden" },
-  { code: "NW2", area: "Dollis Hill" },
-  { code: "NW10", area: "Neasden" },
-  { code: "NW6", area: "Kilburn" },
-  { code: "NW6", area: "West Hampstead" },
-  { code: "NW6", area: "Brondesbury" },
-  { code: "NW10", area: "Kensal Rise" },
-  { code: "NW3", area: "Hampstead" },
-  { code: "NW4", area: "Hendon" },
-  { code: "NW11", area: "Golders Green" },
-];
+import {
+  accreditations,
+  coverageAreas as POSTCODES,
+  reviewSummary,
+  site,
+  testimonials as QUOTES,
+} from "@/siteconfig";
 
 export function Coverage() {
   return (
@@ -34,7 +27,7 @@ export function Coverage() {
                   NW London postcodes, <span className="text-volt">covered</span>
                 </h2>
                 <p className="mt-5 leading-relaxed text-mist">
-                  Based in Cricklewood, serving North West London with fast response times
+                  Based in {site.depotArea}, serving {site.serviceArea} with fast response times
                   measured door-to-door.
                 </p>
               </Reveal>
@@ -75,51 +68,6 @@ export function Coverage() {
 
 /* ------------------------------ testimonials ------------------------------ */
 
-const QUOTES = [
-  {
-    quote:
-      "Fantastic service. Reliable, efficient, works quickly and fixed a problem a previous electrician couldn't. Thank you James, we are happy to have a trusted electrician for any future jobs.",
-    name: "Jack",
-    meta: "Cricklewood, NW2 · socket replacement",
-    initials: "JK",
-  },
-  {
-    quote:
-      "James is not your average tradesman. He's super professional, pleasant to have around and knows his stuff. He answers emails promptly, turns up exactly when he's promised. Honestly, we can't recommend James highly enough.",
-    name: "Claire Chaudoir",
-    meta: "Willesden, NW10 · fault finding",
-    initials: "CC",
-  },
-  {
-    quote:
-      "Reliable, honest and trustworthy. Very satisfied with his work and the advice he gave me was most helpful. Couldn't recommend him more highly.",
-    name: "Teresa Courtney",
-    meta: "Dollis Hill, NW2 · lighting installation",
-    initials: "TC",
-  },
-  {
-    quote:
-      "James arrived on time and did a good and quick job replacing a number of double sockets and a light fitting. In and out in 45 minutes.",
-    name: "Michael Barker",
-    meta: "Neasden, NW10 · sockets & lights",
-    initials: "MB",
-  },
-  {
-    quote:
-      "James was great. Punctual, friendly, professional and reasonable prices. What more could you ask for? Besides, he's a lovely person!",
-    name: "Ornah Levine-Dolberg",
-    meta: "Kilburn, NW6 · rewiring",
-    initials: "OL",
-  },
-  {
-    quote:
-      "James is a reliable, efficient and friendly electrician. He turned up on time and tried his best to solve the problem. Price is fair. Very glad to have found him.",
-    name: "Dr W Wang",
-    meta: "West Hampstead, NW3 · consumer unit",
-    initials: "WW",
-  },
-];
-
 function Testimonials() {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -145,7 +93,7 @@ function Testimonials() {
             The neighbours already use us
           </h2>
           <div className="mt-6 flex items-center gap-4 border border-edge bg-ink2/70 px-5 py-4">
-            <span className="font-display text-5xl font-extrabold text-volt">5.0</span>
+            <span className="font-display text-5xl font-extrabold text-volt">{reviewSummary.score}</span>
             <div>
               <span className="flex text-volt" aria-label="5.0 out of 5 stars">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -153,7 +101,7 @@ function Testimonials() {
                 ))}
               </span>
               <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mist">
-                60+ Google reviews · Which? Trusted Trader
+                {reviewSummary.count} {reviewSummary.source} reviews · {accreditations.whichTrustedTrader}
               </p>
             </div>
           </div>
@@ -213,7 +161,7 @@ function Testimonials() {
                 <div>
                   <p className="font-semibold text-snow">{QUOTES[idx].name}</p>
                   <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-mist">
-                    {QUOTES[idx].meta} · via Google
+                    {QUOTES[idx].meta} · via {reviewSummary.source}
                   </p>
                 </div>
                 <span className="ml-auto hidden font-mono text-xs text-mist sm:block">

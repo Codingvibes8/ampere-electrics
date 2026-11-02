@@ -4,13 +4,9 @@ import React from "react";
 import { useScramble } from "@/lib/motion";
 import { IconArrow, IconBolt, IconPhone, IconShield, IconStar } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { accreditations, contact, coverageMarquee, hours, site } from "@/siteconfig";
 
 const WORDS = ["ELECTRIFIED.", "PROTECTED.", "CERTIFIED.", "POWERED UP."] as const;
-
-const AREAS = [
-  "CRICKLEWOOD", "WILLESDEN", "DOLLIS HILL", "NEASDEN", "KILBURN",
-  "WEST HAMPSTEAD", "BRONDESBURY", "KENSAL RISE",
-];
 
 function CircuitBackdrop() {
   return (
@@ -65,7 +61,7 @@ export function Hero() {
         style={{ writingMode: "vertical-rl" }}
         aria-hidden="true"
       >
-        230V — 50Hz — BS 7671:2018+A2 — NAPIT APPROVED
+        230V — 50Hz — {accreditations.wiringRegulations} — {accreditations.napit.toUpperCase()}
       </p>
 
       <div className="relative mx-auto grid max-w-7xl gap-8 px-4 pb-8 pt-10 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-10 lg:pt-12">
@@ -73,7 +69,7 @@ export function Hero() {
         <div className="lg:col-span-7">
           <p className="mask-line font-mono text-[0.68rem] uppercase tracking-[0.24em] text-volt">
             <span style={{ "--d": "80ms" } as React.CSSProperties}>
-              ⌁ NAPIT approved · Which? Trusted Trader · serving NW London
+              ⌁ {site.tagline}
             </span>
           </p>
 
@@ -112,10 +108,10 @@ export function Hero() {
 
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="group">
-              <a href="tel:+447000000000" className="flex items-center gap-3">
+              <a href={contact.phoneHref} className="flex items-center gap-3">
                 <IconPhone className="h-4.5 w-4.5 transition-transform duration-300 group-hover:-rotate-12" />
-                07000 000 000
-                <span className="hidden font-medium normal-case tracking-normal opacity-80 sm:inline">24/7</span>
+                {contact.phone}
+                <span className="hidden font-medium normal-case tracking-normal opacity-80 sm:inline">{hours.emergencyShort}</span>
               </a>
             </Button>
             
@@ -132,11 +128,11 @@ export function Hero() {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 bg-[#0C4DA2]/20 border border-[#0C4DA2]/50 rounded-full px-4 py-2 shadow-lg transition-transform hover:scale-105">
                 <IconShield className="w-4 h-4 text-snow" />
-                <span className="text-xs font-bold text-snow tracking-wide">NAPIT Approved</span>
+                <span className="text-xs font-bold text-snow tracking-wide">{accreditations.napit}</span>
               </div>
               <div className="flex items-center gap-2 bg-[#BC3931]/20 border border-[#BC3931]/50 rounded-full px-4 py-2 shadow-lg transition-transform hover:scale-105">
                 <IconStar className="w-4 h-4 text-snow" />
-                <span className="text-xs font-bold text-snow tracking-wide">Which? Trusted Trader</span>
+                <span className="text-xs font-bold text-snow tracking-wide">{accreditations.whichTrustedTrader}</span>
               </div>
             </div>
           </div>
@@ -157,7 +153,7 @@ export function Hero() {
             <div className="absolute bottom-4 left-4 border border-edge bg-ink/80 px-4 py-3 backdrop-blur-sm">
               <p className="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-mist">
                 <IconBolt className="h-3.5 w-3.5 text-volt" />
-                NAPIT approved · certified
+                {accreditations.napitLower} · certified
               </p>
             </div>
           </div>
@@ -174,10 +170,10 @@ export function Hero() {
           <div className="marquee-track items-center gap-8">
             {[0, 1].map((dup) => (
               <div key={dup} className="flex items-center gap-8" aria-hidden={dup === 1}>
-                {AREAS.map((a) => (
-                  <span key={`${dup}-${a}`} className="flex items-center gap-8 whitespace-nowrap">
+                {coverageMarquee.map((area) => (
+                  <span key={`${dup}-${area}`} className="flex items-center gap-8 whitespace-nowrap">
                     <span className="font-display text-lg font-bold uppercase tracking-[0.14em] text-mist transition-colors hover:text-volt">
-                      {a}
+                      {area}
                     </span>
                     <IconBolt className="h-3.5 w-3.5 text-volt/70" />
                   </span>

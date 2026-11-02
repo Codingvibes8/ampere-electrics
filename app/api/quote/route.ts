@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Resend } from "resend";
 import { createClient } from "@/utils/supabase/server";
+import { quoteDelivery, quoteRefPrefix } from "@/siteconfig";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
     
     if (supabase) {
       const { error: dbError } = await supabase
-        .from("quotes")
+        .from(quoteDelivery.supabaseTable)
         .insert([
           { name, phone, postcode, job, urgency: date, details }
         ]);
@@ -49,12 +50,12 @@ export async function POST(req: Request) {
     }
 
     // 5. Send email via Resend
-    const ref = `AS-${Math.floor(4822 + Math.random() * 900)}`;
+    const ref = `${quoteRefPrefix}${Math.floor(4822 + Math.random() * 900)}`;
     
     if (process.env.RESEND_API_KEY) {
       const { error: emailError } = await resend.emails.send({
-        from: "Ampere Electric <onboarding@resend.dev>", // Change back to quotes@electricjamez.co.uk once domain is verified
-        to: ["wecodeappz@gmail.com"],
+        from: quoteDelivery.from, // Change back to quotes@electricjamez.co.uk once domain is verified
+        to: [quoteDelivery.to],
         subject: `New Quote Request [${ref}]: ${job}`,
         html: `
           <h2>New Quote Request (${ref})</h2>

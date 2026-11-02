@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { ChevronLeft, Cookie } from 'lucide-react'
+import { contact, legalPages } from '@/siteconfig'
 
 export const metadata = {
-  title: 'Cookie Policy | Electric Jamez',
-  description: 'Learn about how we use cookies at Electric Jamez to improve your browsing experience.',
+  title: legalPages.cookies.title,
+  description: legalPages.cookies.description,
 }
 
 export default function CookiePolicy() {
@@ -22,7 +23,7 @@ export default function CookiePolicy() {
             <span className="text-sm font-bold uppercase tracking-widest text-foreground/60">Legal</span>
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-extrabold text-foreground">Cookie Policy</h1>
-          <p className="mt-4 text-muted-foreground italic">Last Updated: March 19, 2026</p>
+          <p className="mt-4 text-muted-foreground italic">Last Updated: {legalPages.cookies.lastUpdated}</p>
         </header>
 
         <article className="prose prose-lg dark:prose-invert max-w-none space-y-8 text-muted-foreground leading-relaxed">
@@ -72,7 +73,7 @@ export default function CookiePolicy() {
           <section>
             <h2 className="text-2xl font-bold text-foreground font-serif">6. Contact Us</h2>
             <p>
-              If you have any questions about our use of cookies, please contact us at <Link href="mailto:info@electricjamez.co.uk" className="text-primary hover:underline">info@electricjamez.co.uk</Link>.
+              If you have any questions about our use of cookies, please contact us at <Link href={contact.emailHref} className="text-primary hover:underline">{contact.email}</Link>.
             </p>
           </section>
         </article>

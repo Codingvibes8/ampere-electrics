@@ -4,49 +4,20 @@ import { Nav } from '@/components/nav/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { blogPosts, seo } from '@/siteconfig'
 
 export const metadata: Metadata = {
-  title: 'Electrical Tips & Guides | ElectricJamex Blog | North West London',
-  description:
-    'Expert electrical advice, guides, and tips from ElectricJamex. Learn about EV charger installation, home electrical safety, and energy-saving solutions for your London property.',
+  title: seo.blog.title,
+  description: seo.blog.description,
   openGraph: {
-    title: 'ElectricJamex Blog | Electrical Tips & Guides',
-    description:
-      'Expert electrical advice and guides from a NAPIT approved electrician in North West London.',
+    title: seo.blog.openGraphTitle,
+    description: seo.blog.description,
     type: 'website',
     locale: 'en_GB',
   },
 }
 
-const posts = [
-  {
-    slug: 'ev-charger-installation-guide-london-homeowners',
-    title: 'The Complete Guide to EV Charger Installation for London Homeowners',
-    excerpt:
-      'Everything you need to know about installing a home EV charger in London — costs, regulations, grants, and how to choose the right charger for your property.',
-    date: '2026-02-10',
-    readTime: '8 min read',
-    category: 'EV Charging',
-  },
-  {
-    slug: 'electrical-safety-certificate-eicr-what-landlords-need-to-know',
-    title: 'Electrical Safety Certificates (EICR): What Every London Landlord Needs to Know',
-    excerpt:
-      'A landlord\'s guide to EICR regulations, compliance deadlines, penalties for non-compliance, and how to book an inspection with a qualified electrician.',
-    date: '2026-01-25',
-    readTime: '6 min read',
-    category: 'Safety',
-  },
-  {
-    slug: 'signs-your-home-needs-rewiring',
-    title: '7 Warning Signs Your London Home Needs Rewiring',
-    excerpt:
-      'Flickering lights, burning smells, and tripping breakers could mean your wiring is outdated or dangerous. Learn the key warning signs and when to call a professional.',
-    date: '2026-01-12',
-    readTime: '5 min read',
-    category: 'Home Safety',
-  },
-]
+const posts = blogPosts
 
 export default function BlogPage() {
   return (

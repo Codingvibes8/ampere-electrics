@@ -2,39 +2,7 @@
 
 import { Reveal } from "@/lib/motion";
 import { IconArrow, IconBolt, IconShield, IconVan } from "@/components/icons";
-
-type Row = { item: string; note?: string; price: string };
-type Group = { heading: string; rows: Row[] };
-
-const LEDGER: Group[] = [
-  {
-    heading: "Call-outs & labour",
-    rows: [
-      { item: "Emergency call-out — 24/7, 365", note: "first 30 min of labour included", price: "£89" },
-      { item: "Standard visit — Mon–Fri, 8am–6pm", price: "£65" },
-      { item: "Evenings & Saturdays", price: "£75" },
-      { item: "Hourly rate thereafter", note: "charged in 15-min increments", price: "£55/hr" },
-    ],
-  },
-  {
-    heading: "Testing & upgrades",
-    rows: [
-      { item: "EICR — home up to 3 bedrooms", note: "PDF certificate within 24h", price: "£129" },
-      { item: "EICR — 4–5 bed or HMO", price: "from £179" },
-      { item: "Consumer unit upgrade — 18-way", note: "dual RCD + Type 2 SPD, notified", price: "from £549" },
-      { item: "Fault finding (per hour)", note: "waived if we fix it there and then", price: "£55" },
-    ],
-  },
-  {
-    heading: "Installs",
-    rows: [
-      { item: "EV charger — 7kW, standard install", note: "inc. cable run to 10m & certification", price: "from £849" },
-      { item: "Double socket — supplied & fitted", price: "from £95" },
-      { item: "Downlights — room of six", note: "fire-rated, dimmable LED", price: "from £240" },
-      { item: "Electric shower — like-for-like swap", price: "from £320" },
-    ],
-  },
-];
+import { rateCard as LEDGER } from "@/siteconfig";
 
 export function Rates() {
   return (

@@ -4,33 +4,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/lib/motion";
 import { IconBolt, IconPlus } from "@/components/icons";
-
-const FAQS = [
-  {
-    q: "Do I actually need an EICR?",
-    a: "If you're a landlord, yes — it's a legal requirement in England, renewed at least every 5 years, and you must supply it to tenants within 28 days. If you're a homeowner, it's not law, but it's the only way to know whether 40-year-old cables are safe behind the walls. We'll tell you honestly if your property doesn't need one yet.",
-  },
-  {
-    q: "Are you properly insured and accredited?",
-    a: "Yes. NAPIT Approved and Which? Trusted Trader registered, and we carry £5m public liability plus £10m employer's liability cover. Certificates are available on request before we step foot in your home.",
-  },
-  {
-    q: "What exactly does the emergency call-out cover?",
-    a: "£89 gets an engineer to your door 24/7 with the first 30 minutes of diagnosis and labour included. Most common faults — tripping RCDs, dead circuits, burning smells traced — are resolved inside that window. Anything bigger gets a fixed written price before we continue.",
-  },
-  {
-    q: "Do you handle Building Control notifications?",
-    a: "Yes — all notifiable work (new circuits, consumer unit changes, work in bathrooms) is registered with Building Control through our NAPIT membership. You receive the certificate PDF the same day and the official notification within 30 days, filed for your records.",
-  },
-  {
-    q: "How do you take payment?",
-    a: "Card, bank transfer, or Apple/Google Pay on the van. Landlords and commercial clients get monthly invoicing. We never add card surcharges, and you'll never hear 'cash only, mate' from us.",
-  },
-  {
-    q: "Can you work alongside my builder or kitchen fitter?",
-    a: "Happily — most of our work is coordinated with other trades. We'll share drawings, agree first- and second-fix dates by email, and actually turn up on the day we said. Your builder will like us; they usually send their own homes our way.",
-  },
-];
+import { contact, faqs as FAQS } from "@/siteconfig";
 
 export function Faq() {
   const [open, setOpen] = useState(0);
@@ -52,10 +26,10 @@ export function Faq() {
                 Anything else — ring the office, James knows everything.
               </p>
               <a
-                href="tel:+447000000000"
+                href={contact.phoneHref}
                 className="mt-7 inline-flex items-center gap-2 border border-edge px-5 py-3.5 font-mono text-[0.72rem] font-bold uppercase tracking-[0.14em] text-snow transition-all duration-300 hover:border-volt hover:text-volt"
               >
-                07000 000 000
+                {contact.phone}
               </a>
             </Reveal>
           </div>

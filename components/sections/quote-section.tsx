@@ -14,18 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-
-const JOBS = [
-  "Emergency / fault right now",
-  "Air Conditioning Service",
-  "EV Charger Installation",
-  "EICR & Safety Certificates",
-  "Flood Damage Assessment",
-  "Outdoor Lighting & Heating",
-  "PAT Testing",
-  "Solar Panel Installation",
-  "Something else entirely",
-];
+import { contact, hours, jobOptions as JOBS, quoteRefPrefix, site } from "@/siteconfig";
 
 const formSchema = z.object({
   name: z.string().min(2, "We need a name to call you back"),
@@ -80,7 +69,7 @@ export function Quote() {
       }
       
       toast.success("Quote request sent successfully!");
-      setRef(result.ref || `AS-${Math.floor(4822 + Math.random() * 900)}`);
+      setRef(result.ref || `${quoteRefPrefix}${Math.floor(4822 + Math.random() * 900)}`);
       setStatus("done");
     } catch (err: any) {
       toast.error(err.message || "An error occurred. Please try again.");
@@ -123,7 +112,7 @@ export function Quote() {
           <Reveal delay={130}>
             <ul className="mt-10 space-y-5">
               <li>
-                <a href="tel:+447000000000" className="group flex items-center gap-4">
+                <a href={contact.phoneHref} className="group flex items-center gap-4">
                   <span className="flex h-11 w-11 items-center justify-center border border-edge bg-ink2 text-volt transition-all duration-300 group-hover:border-volt group-hover:bg-volt group-hover:text-ink">
                     <IconPhone className="h-5 w-5" />
                   </span>
@@ -132,13 +121,13 @@ export function Quote() {
                       24/7 line — a human answers
                     </span>
                     <span className="block text-lg font-semibold text-snow group-hover:text-volt">
-                      07000 000 000
+                      {contact.phone}
                     </span>
                   </span>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@electricjamez.co.uk" className="group flex items-center gap-4">
+                <a href={contact.emailHref} className="group flex items-center gap-4">
                   <span className="flex h-11 w-11 items-center justify-center border border-edge bg-ink2 text-volt transition-all duration-300 group-hover:border-volt group-hover:bg-volt group-hover:text-ink">
                     <IconMail className="h-5 w-5" />
                   </span>
@@ -147,7 +136,7 @@ export function Quote() {
                       Quotes & certificates
                     </span>
                     <span className="block text-lg font-semibold text-snow group-hover:text-volt">
-                      info@electricjamez.co.uk
+                      {contact.email}
                     </span>
                   </span>
                 </a>
@@ -161,7 +150,7 @@ export function Quote() {
                     The depot
                   </span>
                   <span className="block text-lg font-semibold text-snow">
-                    Cricklewood, NW2, North West London
+                    {contact.address.oneLine}
                   </span>
                 </span>
               </li>
@@ -174,7 +163,7 @@ export function Quote() {
                     Office hours
                   </span>
                   <span className="block text-lg font-semibold text-snow">
-                    Mon–Sat 7:30–18:00 · emergencies 24/7
+                    {hours.display}
                   </span>
                 </span>
               </li>
@@ -201,8 +190,8 @@ export function Quote() {
                 </p>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-mist">
                   If it's urgent in the meantime, skip the queue:{" "}
-                  <a href="tel:+447000000000" className="font-semibold text-volt underline-offset-4 hover:underline">
-                    07000 000 000
+                  <a href={contact.phoneHref} className="font-semibold text-volt underline-offset-4 hover:underline">
+                    {contact.phone}
                   </a>
                   .
                 </p>
@@ -335,7 +324,7 @@ export function Quote() {
                   )}
                 </Button>
                 <p className="mt-3.5 text-center font-mono text-[0.62rem] uppercase tracking-[0.14em] text-mist/70">
-                  No spam, no selling your number — just a call back from James
+                  No spam, no selling your number — just a call back from {site.ownerName}
                 </p>
               </form>
             )}

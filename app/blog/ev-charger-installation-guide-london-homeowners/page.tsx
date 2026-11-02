@@ -4,9 +4,10 @@ import { Nav } from '@/components/nav/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Calendar, Clock, ArrowLeft, Phone, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
+import { contact, site } from '@/siteconfig'
 
 export const metadata: Metadata = {
-  title: 'EV Charger Installation Guide for London Homeowners | ElectricJamex',
+  title: `EV Charger Installation Guide for London Homeowners | ${site.name}`,
   description:
     'Complete guide to home EV charger installation in London. Learn about costs (from £800), OZEV grants, planning regulations, charger types, and how to find a certified installer in North West London.',
   keywords: [
@@ -195,7 +196,7 @@ export default function EVChargerArticle() {
                 Get a free, no-obligation quote from a NAPIT approved installer in North West London.
               </p>
               <a
-                href="tel:+447000000000"
+                href={contact.phoneHref}
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity glow-box"
               >
                 <Phone className="w-5 h-5" />
@@ -219,11 +220,11 @@ export default function EVChargerArticle() {
             datePublished: '2026-02-10',
             author: {
               '@type': 'Organization',
-              name: 'ElectricJamex',
+              name: site.name,
             },
             publisher: {
               '@type': 'Organization',
-              name: 'ElectricJamex',
+              name: site.name,
             },
           }),
         }}

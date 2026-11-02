@@ -4,9 +4,10 @@ import { Nav } from '@/components/nav/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Calendar, Clock, ArrowLeft, Phone, CheckCircle, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
+import { contact, site } from '@/siteconfig'
 
 export const metadata: Metadata = {
-  title: 'EICR Electrical Safety Certificate Guide for Landlords | ElectricJamex',
+  title: `EICR Electrical Safety Certificate Guide for Landlords | ${site.name}`,
   description:
     'Complete guide to Electrical Installation Condition Reports (EICR) for London landlords. Learn about legal requirements, costs (from £150), penalties up to £30,000, and how to book an inspection with a NAPIT approved electrician.',
   keywords: [
@@ -207,7 +208,7 @@ export default function EICRArticle() {
                 Stay compliant and keep your tenants safe. Our NAPIT approved electricians provide fast, thorough EICR inspections across North West London.
               </p>
               <a
-                href="tel:+447000000000"
+                href={contact.phoneHref}
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity glow-box"
               >
                 <Phone className="w-5 h-5" />
@@ -230,8 +231,8 @@ export default function EICRArticle() {
             description:
               "A landlord's guide to EICR regulations, compliance deadlines, penalties, and how to book an inspection.",
             datePublished: '2026-01-25',
-            author: { '@type': 'Organization', name: 'ElectricJamex' },
-            publisher: { '@type': 'Organization', name: 'ElectricJamex' },
+            author: { '@type': 'Organization', name: site.name },
+            publisher: { '@type': 'Organization', name: site.name },
           }),
         }}
       />

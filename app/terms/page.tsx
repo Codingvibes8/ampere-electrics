@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { ChevronLeft, FileText } from 'lucide-react'
+import { contact, legalPages } from '@/siteconfig'
 
 export const metadata = {
-  title: 'Terms of Service | Electric Jamez',
-  description: 'The legal terms and conditions for our electrical services at Electric Jamez.',
+  title: legalPages.terms.title,
+  description: legalPages.terms.description,
 }
 
 export default function TermsOfService() {
@@ -22,7 +23,7 @@ export default function TermsOfService() {
             <span className="text-sm font-bold uppercase tracking-widest text-foreground/60">Legal</span>
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-extrabold text-foreground">Terms of Service</h1>
-          <p className="mt-4 text-muted-foreground italic">Last Updated: March 19, 2026</p>
+          <p className="mt-4 text-muted-foreground italic">Last Updated: {legalPages.terms.lastUpdated}</p>
         </header>
 
         <article className="prose prose-lg dark:prose-invert max-w-none space-y-8 text-muted-foreground leading-relaxed">
@@ -78,7 +79,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold text-foreground font-serif">8. Contact Information</h2>
             <p>
-              If you have any questions or concerns regarding these Terms of Service, please contact us at <Link href="mailto:info@electricjamez.co.uk" className="text-primary hover:underline">info@electricjamez.co.uk</Link>.
+              If you have any questions or concerns regarding these Terms of Service, please contact us at <Link href={contact.emailHref} className="text-primary hover:underline">{contact.email}</Link>.
             </p>
           </section>
         </article>

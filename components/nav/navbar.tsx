@@ -6,30 +6,7 @@ import { IconBolt, IconPhone, IconPin, Logo } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ChevronDown } from "lucide-react";
-
-const SERVICES_ITEMS = [
-  { label: "Air Conditioning Service", href: "#services", desc: "Split systems, ducted AC & maintenance" },
-  { label: "EV Charger Installation", href: "#services", desc: "Tesla, Ohme & Pod Point certified" },
-  { label: "Electric Safety Certificates", href: "#services", desc: "Landlord EICR & homebuyer reports" },
-  { label: "Flood Damage Assessment", href: "#services", desc: "Emergency isolation & re-certification" },
-  { label: "Outdoor Lighting & Heating", href: "#services", desc: "Garden, security & patio heaters" },
-  { label: "PAT Testing", href: "#services", desc: "Workplace compliance & digital reports" },
-  { label: "Solar Panel Installation", href: "#services", desc: "MCS certified PV & battery storage" },
-];
-
-const AREAS_ITEMS = [
-  { code: "NW2", area: "Cricklewood", mins: "15 min", depot: true },
-  { code: "NW10", area: "Willesden", mins: "18 min" },
-  { code: "NW2", area: "Dollis Hill", mins: "12 min" },
-  { code: "NW10", area: "Neasden", mins: "20 min" },
-  { code: "NW6", area: "Kilburn", mins: "22 min" },
-  { code: "NW6", area: "West Hampstead", mins: "25 min" },
-  { code: "NW6", area: "Brondesbury", mins: "24 min" },
-  { code: "NW10", area: "Kensal Rise", mins: "20 min" },
-  { code: "NW3", area: "Hampstead", mins: "20 min" },
-  { code: "NW4", area: "Hendon", mins: "18 min" },
-  { code: "NW11", area: "Golders Green", mins: "15 min" },
-];
+import { contact, coverageAreas, services, site } from "@/siteconfig";
 
 function useScrolled(threshold = 10) {
   const [scrolled, setScrolled] = useState(false);
@@ -102,14 +79,14 @@ export function Nav() {
                   <IconBolt className="h-3 w-3" /> Electrical Services
                 </p>
                 <ul className="space-y-1">
-                  {SERVICES_ITEMS.map((item) => (
-                    <li key={item.label}>
+                  {services.map((service) => (
+                    <li key={service.id}>
                       <a
-                        href={item.href}
+                        href="#services"
                         className="block border border-transparent p-2 transition-all hover:border-edge hover:bg-ink hover:text-volt"
                       >
-                        <p className="font-semibold text-snow">{item.label}</p>
-                        <p className="font-mono text-[0.6rem] text-mist/70">{item.desc}</p>
+                        <p className="font-semibold text-snow">{service.title}</p>
+                        <p className="font-mono text-[0.6rem] text-mist/70">{service.navDescription}</p>
                       </a>
                     </li>
                   ))}
@@ -146,10 +123,10 @@ export function Nav() {
                   <span className="flex items-center gap-1.5">
                     <IconPin className="h-3 w-3" /> NW London Coverage
                   </span>
-                  <span className="text-[0.55rem] text-mist">Depot NW2</span>
+                  <span className="text-[0.55rem] text-mist">Depot {site.depotPostcode}</span>
                 </p>
                 <div className="grid grid-cols-2 gap-1">
-                  {AREAS_ITEMS.map((item) => (
+                  {coverageAreas.map((item) => (
                     <a
                       key={item.area}
                       href="#areas"
@@ -200,11 +177,11 @@ export function Nav() {
 
         <div className="flex items-center gap-3">
           <a
-            href="tel:+447000000000"
+            href={contact.phoneHref}
             className="group hidden items-center gap-2 font-mono text-sm font-semibold text-snow transition-colors hover:text-volt md:flex"
           >
             <IconPhone className="h-4 w-4 text-volt transition-transform duration-300 group-hover:-rotate-12" />
-            07000 000 000
+            {contact.phone}
           </a>
           
           <Button asChild className="hidden sm:inline-flex">
@@ -251,14 +228,14 @@ export function Nav() {
                   </button>
                   {mobileServicesOpen && (
                     <ul className="ml-4 mt-2 space-y-1.5 border-l border-edge pl-3">
-                      {SERVICES_ITEMS.map((s) => (
-                        <li key={s.label}>
+                      {services.map((service) => (
+                        <li key={service.id}>
                           <a
-                            href={s.href}
+                            href="#services"
                             onClick={() => setMenuOpen(false)}
                             className="block py-1 text-xs text-mist hover:text-volt"
                           >
-                            {s.label}
+                            {service.title}
                           </a>
                         </li>
                       ))}
@@ -288,7 +265,7 @@ export function Nav() {
                   </button>
                   {mobileAreasOpen && (
                     <ul className="ml-4 mt-2 grid grid-cols-2 gap-1 border-l border-edge pl-3">
-                      {AREAS_ITEMS.map((a) => (
+                      {coverageAreas.map((a) => (
                         <li key={a.area}>
                           <a
                             href="#areas"
@@ -335,8 +312,8 @@ export function Nav() {
 
                 <li className="pt-4">
                   <Button asChild className="w-full justify-center">
-                    <a href="tel:+447000000000" className="flex items-center gap-2">
-                      <IconPhone className="h-4 w-4" /> Call 07000 000 000
+                    <a href={contact.phoneHref} className="flex items-center gap-2">
+                      <IconPhone className="h-4 w-4" /> Call {contact.phone}
                     </a>
                   </Button>
                 </li>

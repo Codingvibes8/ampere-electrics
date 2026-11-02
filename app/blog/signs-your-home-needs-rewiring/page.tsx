@@ -4,9 +4,10 @@ import { Nav } from '@/components/nav/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Calendar, Clock, ArrowLeft, Phone, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
+import { contact, site } from '@/siteconfig'
 
 export const metadata: Metadata = {
-  title: '7 Warning Signs Your Home Needs Rewiring | ElectricJamex',
+  title: `7 Warning Signs Your Home Needs Rewiring | ${site.name}`,
   description:
     'Flickering lights, burning smells, and tripping breakers are signs your London home may need rewiring. Learn the 7 key warning signs, average rewiring costs, and when to call a qualified electrician.',
   keywords: [
@@ -202,7 +203,7 @@ export default function RewiringArticle() {
                 Book a professional EICR inspection or get a free rewiring consultation with our NAPIT approved electricians in North West London.
               </p>
               <a
-                href="tel:+447000000000"
+                href={contact.phoneHref}
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity glow-box"
               >
                 <Phone className="w-5 h-5" />
@@ -224,8 +225,8 @@ export default function RewiringArticle() {
             description:
               'Flickering lights, burning smells, and tripping breakers could mean your wiring is outdated or dangerous. Learn the key warning signs.',
             datePublished: '2026-01-12',
-            author: { '@type': 'Organization', name: 'ElectricJamex' },
-            publisher: { '@type': 'Organization', name: 'ElectricJamex' },
+            author: { '@type': 'Organization', name: site.name },
+            publisher: { '@type': 'Organization', name: site.name },
           }),
         }}
       />
